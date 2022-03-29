@@ -50,14 +50,6 @@ export default class ImgCropper extends Component {
     };
     ss.push(newChange);
     sessionStorage.setItem("imgChange", JSON.stringify(ss));
-
-    // const str = URL.createObjectURL(blob);
-    // const { getLink } = this.props;
-    // getLink(src);
-    // this.props.getLink()
-    // this.setState({
-    //     [key]: str
-    // })
   };
 
   render() {

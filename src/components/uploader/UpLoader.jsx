@@ -25,9 +25,9 @@ const switchModel = (type) => {
 }
 
 function getBase64(img, callback) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
+    // const reader = new FileReader();
+    // reader.addEventListener('load', () => callback(reader.result));
+    //reader.readAsDataURL(img);
 }
 
 class UpLoaderModel extends Component {
@@ -90,7 +90,7 @@ class UpLoaderModel extends Component {
             flist.push(this.props.bindTo)
             //控制列表长度
             let listLimit = 0 - parseInt(sessionStorage.getItem("listLimit"));
-            // console.log(listLimit);
+            console.log(listLimit);
             let fileList = [...info.fileList];
             fileList = fileList.slice(listLimit);
             this.setState({ fileList });
