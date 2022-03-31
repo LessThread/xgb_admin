@@ -379,7 +379,7 @@ class Src extends React.Component {
                         {navMenu ? this.renderSideMenu() : <Spin tip="Loading..." size="large" />}
                     </Tabs>
                 </div>
-                <div className={(introduct[subordNavIndex] ? introduct[subordNavIndex] : 0) && introduct[subordNavIndex].message.length > 0 ? "resource-jump" : "resource-margin"} >
+                <div className={(introduct[subordNavIndex] ? introduct[subordNavIndex] : 0) && introduct[subordNavIndex].length > 0 ? "resource-jump" : "resource-margin"} >
                     <Col span={8} offset={3}>
                         <label>移动到：</label>
                         <Select id={1} style={{ width: "60%" }} onChange={this.handleSelect} key={1} required="true" placeholder="请选择一个栏目" >

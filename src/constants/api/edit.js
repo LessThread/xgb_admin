@@ -9,7 +9,7 @@ export const postNewsMessage = (nav_id, title, pic, icon, content, appendix, rem
     formdata.append("remark", remark);
 
     return {
-        apiPath: `admin/add`,
+        apiPath: `Article/add`,  //`admin/add`,
         request: {
             method: "POST",
             mode: 'no-cors',
@@ -35,7 +35,7 @@ export const postActivityMessage = (nav_id, title, pic, icon, details, speaker, 
     formdata.append("appendix", appendix);
     formdata.append("remark", remark);
     return {
-        apiPath: `admin/add`,
+        apiPath: `Article/add`,//`admin/add`,
         request: {
             method: "POST",
             mode: 'no-cors',

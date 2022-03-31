@@ -52,9 +52,9 @@ export const editBanner = (pic, title, nav_id, mes_id, rank, id) => {
 
 export const delBanner = (id) => {
     return {
-        apiPath: `delbanner/` + id,
+        apiPath: `banner/delete?id=`,   //`delbanner/` + id,
         request: {
-            method: "GET",
+            method: "POST",
             mode: 'no-cors',
         }
     }
@@ -63,9 +63,9 @@ export const delBanner = (id) => {
 
 export const showMessageList = (id) => {
     return {
-        apiPath: `BMessage/${id}`,
+        apiPath: `queryMessag?=${id}`,
         request: {
-            method: "GET",
+            method: "POST",
             mode: 'no-cors',
         }
     }
