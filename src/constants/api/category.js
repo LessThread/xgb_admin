@@ -20,7 +20,7 @@ export const getCategory = () => {
 
 export const getAllCat = () => {
     return {
-        url: 'admin/allCat',
+        url: `getAllCategory`,//'admin/allCat',
         request: {
             method: 'GET',
         }
@@ -29,7 +29,7 @@ export const getAllCat = () => {
 
 export const addCate = (body) => {
     return {
-        url: 'admin/addCat',
+        url: `addCategory`,//'admin/addCat',
         request: {
             body: body,
             method: 'POST',
@@ -42,7 +42,7 @@ export const addCate = (body) => {
 
 export const updateCate = (body, id) => {
     return {
-        url: `admin/upCat/${id}`,
+        url: `updateCategory`,  //`admin/upCat/${id}`,
         request: {
             body: body,
             method: 'POST',
@@ -52,7 +52,7 @@ export const updateCate = (body, id) => {
 
 export const deleteCate = (id) => {
     return {
-        url: `admin/delCat/${id}`,
+        url: `deleteCategory?id=${id}`,//`admin/delCat/${id}`,
         request: {
             method: 'GET'
         }

@@ -1,9 +1,9 @@
 //获取二级导航下所有文章
 export const getNavAllArticle = (id) => {
     return {
-        apiPath: `Article/getById?id=${id}`,
+        apiPath: `Article/getById?id=1`,//${id}`,
         request: {
-            method: 'POST',
+            method: 'GET',
         }
     }
 }
@@ -11,7 +11,7 @@ export const getNavAllArticle = (id) => {
 // //获取该二级导航下所有文章的title和它的id。
 export const getArticleTitle = (nav_id) => {
     return {
-        apiPath: `Article/getById?id=${nav_id}`,
+        apiPath: `Article/getById?id=1`,//${nav_id}`,
         request: {
             method: 'GET',
             // mode: 'no-cors'

@@ -29,7 +29,7 @@ export const upperModelPreview = () => {
 //请求下面四个的数据
 export const lowwerModelPreview = (name) => {
     return {
-        apiPath: 'admin/lowwer/' + name,
+        apiPath: 'admin/GetLowwer',
         request: {
             method: "GET",
         }
