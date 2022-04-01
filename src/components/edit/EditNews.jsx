@@ -125,17 +125,25 @@ class EditorDemo extends React.Component {
 
     listColumn(data) {
         let columns = [];
-        if (data.length > 0) {
-            for (let i = 0; i < data.length; i++) {
-                if (data[i].contentType === "2")
-                    columns.push(
-                        <Option value={data[i].id}>{data[i].title}</Option>
-                    )
+        //debugger
+        {
+            if (data.length > 0) {
+                for (let i = 0; i < data.length; i++) {
+                    // console.log(data.length)
+                    // console.log("#####" + data[i].title + data[i].contentType)
+                    // console.log("#####" + (data[i].contentType === 1))
+                    if (data[i].contentType === 2)
+
+                        columns.push(
+                            <Option value={data[i].id}>{data[i].title}</Option>
+                        )
+                }
             }
-        } else {
-            return this.noNaviNotification();
+            else {
+                return this.noNaviNotification();
+            }
+            return columns;
         }
-        return columns;
     }
 
     buildPreviewHtml() {

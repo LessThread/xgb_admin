@@ -81,20 +81,30 @@ class EditorDemo extends React.Component {
             sessionStorage.removeItem('filepath');
             sessionStorage.removeItem('picpath');
             sessionStorage.removeItem('iconpath');
+
+
             const { apiPath, request } = getCategory();
+            console.log(apiPath);
+
+            //debugger
             fetchApi(apiPath, request)
                 .then(res => res.json())
                 .then(data => {
-                    // console.log(data.data)
+                    console.log(apiPath)
                     this.setState({
                         catData: data.data,
                         isNaviLoaded: true,
                     })
+                    // console.log("................" + this.state.catData[0].contentType)
+                    // console.log("................" + this.state.catData[1].contentType)
+                    // console.log("................" + this.state.catData[2].contentType)
                 });
+
+
             if (this.props.location.state) {
                 const { apiPath, request } = editMessage(this.props.location.state.navID, this.props.location.state.articleID);
-                // console.log(this.props.location.state.navID)
-                // console.log(this.props.location.state.articleID)
+                console.log(this.props.location.state.navID)
+                console.log(this.props.location.state.articleID)
                 fetchApi(apiPath, request)
                     .then(res => res.json())
                     .then(data => {
@@ -140,20 +150,29 @@ class EditorDemo extends React.Component {
     handleEditorChange = (editorState) => {
         this.setState({ editorState })
     }
+
     //为什么会保存的时候获取列表为空？
     listColumn(data) {
         let columns = [];
-        if (data.length > 0) {
-            for (let i = 0; i < data.length; i++) {
-                if (data[i].contentType === "1")
-                    columns.push(
-                        <Option value={data[i].id}>{data[i].title}</Option>
-                    )
+        //debugger
+        {
+            if (data.length > 0) {
+                for (let i = 0; i < data.length; i++) {
+                    // console.log(data.length)
+                    // console.log("#####" + data[i].title + data[i].contentType)
+                    // console.log("#####" + (data[i].contentType === 1))
+                    if (data[i].contentType === 2)
+
+                        columns.push(
+                            <Option value={data[i].id}>{data[i].title}</Option>
+                        )
+                }
             }
-        } else {
-            return this.noNaviNotification();
+            else {
+                return this.noNaviNotification();
+            }
+            return columns;
         }
-        return columns;
     }
 
     buildPreviewHtml() {
@@ -366,6 +385,7 @@ class EditorDemo extends React.Component {
                             })(
                                 <Select key="editActCat" required="true" style={{ width: '20%' }} placeholder="请选择一个栏目">
                                     {this.state.isNaviLoaded ? this.listColumn(this.state.catData) : null}
+                                    {/* {this.listColumn(this.state.catData)} */}
                                 </Select>
                             )}
                         </Form.Item>
