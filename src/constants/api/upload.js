@@ -7,6 +7,7 @@ export const uploadPic = (file) => {
         request: {
             body: formdata,
             method: "POST",
+            id: "fileUpload"
         }
     }
 }
@@ -20,6 +21,7 @@ export const uploadApp = (file) => {
         request: {
             body: formdata,
             method: "POST",
+            id: "fileUpload"
         }
     }
 }
