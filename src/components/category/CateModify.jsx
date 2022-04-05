@@ -38,13 +38,18 @@ class CateModifyCon extends React.Component {
             for (let props in values) {
                 formData.append(props, values[props]);
             }
+
             let url, request = null;
             if (data && data.id) {
                 url = updateCate(formData, data.id).url;
                 request = updateCate(formData, data.id).request;
                 msg = "更新"
-            } else {
+            }
+
+            else {
                 url = addCate(formData).url;
+                //let formData = new FormData();
+                formData.append("id", "1");
                 request = addCate(formData).request;
                 if (!msg) {
                     msg = "添加"

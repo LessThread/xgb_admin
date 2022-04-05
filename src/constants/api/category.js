@@ -33,6 +33,9 @@ export const addCate = (body) => {
         request: {
             body: body,
             method: 'POST',
+            id: 1,
+            lisType: 1,
+            title: "asd",
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -54,7 +57,7 @@ export const deleteCate = (id) => {
     return {
         url: `deleteCategory?id=${id}`,//`admin/delCat/${id}`,
         request: {
-            method: 'GET'
+            method: 'POST'
         }
     }
 }
