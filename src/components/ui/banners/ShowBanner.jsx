@@ -69,7 +69,6 @@ class BannerForm extends Component {
             fetchApi(apiPath, request)
                 .then(res => res.json())
                 .then(data => {
-                    //alert(apiPath)
                     // console.log(data.data)
                     this.setState({
                         navData: data.data,
@@ -105,7 +104,7 @@ class BannerForm extends Component {
             for (let i = 0; i < this.props.data.length; i++) {
                 if (this.props.data[i].picture > 0) {
                     list.push({
-                        "url": "http://120.48.17.78:8080/api/" + this.props.data[i].picture,
+                        "url": "https://xuegong.twt.edu.cn/" + this.props.data[i].picture,
                     });
                 }
             }
@@ -200,6 +199,8 @@ class BannerForm extends Component {
                         let link = sessionStorage.getItem("imgUrl");
                         // console.log(link)
                         //这里处理一下link
+                        // console.log(link)
+                        // console.log(this.state.flist)
                         if (this.props.data[i].id === -1) {
                             //这是个新增的！调用add
                             //这里因为调用了cropper，将link改为了imglink，下同
