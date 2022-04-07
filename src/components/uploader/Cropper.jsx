@@ -14,7 +14,15 @@ export default class ImgCropper extends Component {
       modalVisible: false,
       modalFile: null,
       resultImgUrl: null,
+      msg: null,
     };
+  }
+
+  handeReceive = (msg) => {
+    this.setState({
+      msg
+    })
+    console.log("$$$" + this.state.msg)
   }
 
   handleFileChange = (e) => {
@@ -64,6 +72,7 @@ export default class ImgCropper extends Component {
     const { modalVisible, modalFile, resultImgUrl } = this.state;
     return (
       <div className="cropper">
+        <img id="testImg" src={this.state.modalFile}></img>
         <div className="half-area">
           <label className="upload-input-label">
             <span>上传图片</span>
@@ -84,6 +93,7 @@ export default class ImgCropper extends Component {
               this.setState({ modalVisible: false });
             }}
             getLink={(obj) => this.handleGetresultImgUrl(obj)}
+            handleSend={this.handeReceive}
           />
         )}
       </div>

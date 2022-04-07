@@ -101,16 +101,16 @@ class BannerModify extends Component {
             } else {
                 //这是个原有的！调用update
                 // console.log('改了！' + this.props.data[i].id)
-                let { apiPath, request } = editBanner(link, values[thisTitle], values[thisColumn], values[i], i + 1, this.props.banData.id);
-                fetchApi(apiPath, request)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.error_code === 0) {
-                            message.success(`修改成功`);
-                        } else {
-                            message.error(`修改失败`);
-                        }
-                    })
+                // let { apiPath, request } = editBanner(link, values[thisTitle], values[thisColumn], values[i], i + 1, this.props.banData.id);
+                // fetchApi(apiPath, request)
+                //     .then(res => res.json())
+                //     .then(data => {
+                //         if (data.error_code === 0) {
+                //             message.success(`修改成功`);
+                //         } else {
+                //             message.error(`修改失败`);
+                //         }
+                //     })
             }
         })
     }
@@ -132,6 +132,7 @@ class BannerModify extends Component {
                                         required: true,
                                         message: '请输入轮播图标题！',
                                     },
+
                                 ],
                                 initialValue: data.title,
                             })(<Input placeholder="20字以内" hideRequiredMark="false" allowClear={`true`} style={{ width: '60%' }} />)
