@@ -89,19 +89,19 @@ class BannerModify extends Component {
                 //这是个新增的！调用add
                 //这里因为调用了cropper，将link改为了imglink，下同
                 let { apiPath, request } = addBanner(link, values[thisTitle], values[thisColumn], values[i], i + 1);
-                fetchApi(apiPath, request)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.error_code === 0) {
-                            message.success(`添加成功`);
-                        } else {
-                            message.error(`添加失败`);
-                        }
-                    })
+                // fetchApi(apiPath, request)
+                //     .then(res => res.json())
+                //     .then(data => {
+                //         if (data.error_code === 0) {
+                //             message.success(`添加成功`);
+                //         } else {
+                //             message.error(`添加失败`);
+                //         }
+                //     })
             } else {
                 //这是个原有的！调用update
                 // console.log('改了！' + this.props.data[i].id)
-                // let { apiPath, request } = editBanner(link, values[thisTitle], values[thisColumn], values[i], i + 1, this.props.banData.id);
+                let { apiPath, request } = editBanner(link, values[thisTitle], values[thisColumn], values[i], i + 1, this.props.banData.id);
                 // fetchApi(apiPath, request)
                 //     .then(res => res.json())
                 //     .then(data => {
@@ -190,7 +190,6 @@ class BannerModify extends Component {
 
     render() {
         const { getFieldDecorator, getFieldValue } = this.props.form;
-        // console.log(this.props.banData)
         return (
             <div>
                 {this.bannerConfig(this.props.banData, this.props.index)}

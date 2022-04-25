@@ -25,9 +25,9 @@ const switchModel = (type) => {
 }
 
 function getBase64(img, callback) {
-    // const reader = new FileReader();
-    // reader.addEventListener('load', () => callback(reader.result));
-    //reader.readAsDataURL(img);
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
 }
 
 class UpLoaderModel extends Component {
