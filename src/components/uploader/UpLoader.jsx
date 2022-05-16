@@ -126,14 +126,25 @@ class UpLoaderModel extends Component {
             fileList = fileList.slice(listLimit);
             this.setState({ fileList });
             if (info.file.status !== 'uploading') {
-                console.log(info.file, info.fileList);
+                //console.log(info.file.response.data.path);
             }
 
             if (info.file.status === 'done') {
                 flist.push(info.fileList[0].response.data.path);
                 if (info.fileList.length > 0) {
                     for (let i = 1; i < info.fileList.length; i++) {
-                        flist.push(info.fileList[i].response.data.path)
+                        let _this = this
+                        let rd = new FileReader() // 创建文件读取对象
+                        let file = info.fileList[i].response.data.path
+                        rd.readAsDataURL(file) // 文件读取装换为base64类型
+                        rd.onloadend = function (e) {
+                            // this指向当前方法onloadend的作用域, this.result就是文件的base64， 这里可自由处理   
+                            // _this.$emit('successCBK', this.result)
+
+                            flist.push(this.result)
+                            console.log(this.result);
+                        }
+
                     }
                 }
                 message.success(`文件上传成功：${info.file.name}`);
@@ -147,6 +158,43 @@ class UpLoaderModel extends Component {
             }
         }
     }
+
+    test = (e) => {
+        e.preventDefault();
+
+        let file = e.target.files[0];
+        const formdata = new FormData();
+        formdata.append('file', file);
+
+        for (var value of formdata.values()) {
+            console.log(value);
+        }
+
+        console.log(formdata);
+
+        let _this = this
+        let rd = new FileReader() // 创建文件读取对象
+        let bfile = formdata
+        rd.readAsDataURL(file) // 文件读取装换为base64类型
+        let dat;
+        rd.onloadend = function (e) {
+            // this指向当前方法onloadend的作用域, this.result就是文件的base64， 这里可自由处理
+            dat = this.result
+            console.log("dat:")
+            console.log(dat)
+
+        }
+
+        const url = 'http://120.48.17.78:8080/api/uploadFile';
+        fetch(url, {
+            method: 'POST',
+            body: dat,
+            // headers: {
+            //     "Content-Type": "multipart/form-data"
+            // }
+        }).then((response) => response.json())
+            .catch(error => console.log(error));
+    };
 
     render() {
         //文件列表长度控制
@@ -164,9 +212,9 @@ class UpLoaderModel extends Component {
             beforeUpload: this.beforeImageUpload,
             listType: 'picture',
             onChange: this.handleChange,
-            headers: {
-                "X-Requested-With": null,
-            }
+            // headers: {
+            //     "X-Requested-With": null,
+            // }
         }
         const fileReqSettings = {
             name: 'file',
@@ -174,59 +222,82 @@ class UpLoaderModel extends Component {
             beforeUpload: this.beforeFileUpload,
             listType: 'text',
             onChange: this.handleChange,
-            headers: {
-                "X-Requested-With": null,
-            }
+            // headers: {
+            //     "X-Requested-With": null,
+            // }
         }
 
         const { getFieldDecorator } = this.props.form;
+
+
         return (
-            <Form.Item label={this.props.disLabel ? null : switchModel(this.props.type).text} >
-                {this.props.type === "image" ?
-                    <div>
-                        {getFieldDecorator(`image${this.props.bindTo}`, {
-                            rules: [
-                                {
-                                    required: this.props.necessary,
-                                    message: '请选择一个图片',
-                                },
-                            ],
-                        })(
-                            <Row>
-                                <Col span={8}>
-                                    <Upload {...imageReqSettings} fileList={this.state.fileList}>
-                                        <Tooltip placement="top" title="小于8MB的图片 格式为jpg/png">
-                                            <Button><Icon type={this.state.loading ? "loading" : "upload"} />上传图片</Button>
-                                        </Tooltip>
-                                    </Upload>
-                                </Col>
-                            </Row>
-                        )}
-                    </div>
-                    : null}
-                {this.props.type === "file" ?
-                    <div>
-                        {getFieldDecorator(`file${this.props.bindTo}`, {
-                            rules: [
-                                {
-                                    required: this.props.necessary,
-                                    message: '请选择一个文件',
-                                },
-                            ],
-                        })(
-                            <Row>
-                                <Col span={8}>
-                                    <Upload {...fileReqSettings} fileList={this.state.fileList}>
-                                        <Tooltip placement="top" title="小于8MB的文件 格式不限">
-                                            <Button><Icon type={this.state.loading ? "loading" : "upload"} />上传附件</Button>
-                                        </Tooltip>
-                                    </Upload>
-                                </Col>
-                            </Row>
-                        )}
-                    </div>
-                    : null}
-            </Form.Item>
+
+            <div>
+                <div>
+                    {/* <input
+                        placeholder="选择文件"
+                        type='file'
+                        style={{ width: 320, display: 'inline-block', }}
+                        name="upload"
+                        ref='file'
+                        onChange={this.test}
+                        accept="excel?'application/vnd.ms-excel':upFile?'application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document':''"
+                    /> */}
+                </div>
+                <Form.Item label={this.props.disLabel ? null : switchModel(this.props.type).text} >
+                    {this.props.type === "image" ?
+                        <div>
+                            {getFieldDecorator(`image${this.props.bindTo}`, {
+                                rules: [
+                                    {
+                                        required: this.props.necessary,
+                                        message: '请选择一个图片',
+                                    },
+                                ],
+                            })(
+                                <Row>
+                                    <Col span={8}>
+                                        <Upload {...imageReqSettings} fileList={this.state.fileList}>
+                                            <Tooltip placement="top" title="小于8MB的图片 格式为jpg/png">
+                                                <Button><Icon type={this.state.loading ? "loading" : "upload"} />上传图片</Button>
+                                            </Tooltip>
+                                        </Upload>
+                                    </Col>
+                                </Row>
+                            )}
+                        </div>
+                        : null}
+                    {this.props.type === "file" ?
+                        <div>
+
+                            {getFieldDecorator(`file${this.props.bindTo}`, {
+                                rules: [
+                                    {
+                                        required: this.props.necessary,
+                                        message: '请选择一个文件',
+                                    },
+                                ],
+                            })(
+                                <Row>
+                                    <Col span={8}>
+                                        <Upload {...fileReqSettings} fileList={this.state.fileList}>
+                                            <Tooltip placement="top" title="小于8MB的文件 格式不限">
+                                                <Button><Icon type={this.state.loading ? "loading" : "upload"} />上传附件</Button>
+
+
+
+                                            </Tooltip>
+                                        </Upload>
+                                    </Col>
+                                </Row>
+                            )}
+                        </div>
+                        : null}
+                </Form.Item>
+
+
+
+            </div>
         )
     }
 }
