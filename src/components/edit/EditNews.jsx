@@ -441,11 +441,14 @@ class EditorDemo extends React.Component {
                     </Form>
                 </Card>
 
+                <iframe name="targetIfr" style={{ display: "none" }}></iframe>
+
                 <div>
-                    <form action="http://120.48.17.78:8080/api/uploadFile"
-                        enctype="multipart/form-data" method="POST">
+                    <form target="" id='form1' action="http://120.48.17.78:8080/api/uploadFile" enctype="multipart/form-data" method="POST">
                         <input name="fileUpload" type="file" id="fileUpload" />
-                        <input type="submit" value="提交" />
+                    </form>
+                    <form method="post">
+                        <input type="submit" formtarget="targetIfr" form='form1' value="提交" />
                     </form>
                 </div>
             </div>
