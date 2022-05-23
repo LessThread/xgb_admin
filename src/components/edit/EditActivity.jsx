@@ -131,14 +131,31 @@ class EditorDemo extends React.Component {
         }
     }
 
-    // async componentDidMount() {
-    //     假设此处从服务端获取html格式的编辑器内容
-    //     const htmlContent = await fetchEditorContent()
-    //     使用BraftEditor.createEditorState将html字符串转换为编辑器需要的editorStat
-    //     this.setState({
-    //         editorState: BraftEditor.createEditorState(htmlContent)
-    //     })
-    // }
+    handleUpload = (e) => {
+        e.preventDefault();
+
+        let file = e.target.files[0];
+
+        const formdata = new FormData();
+        formdata.append('fileUpload', file);
+
+        for (var value of formdata.values()) {
+            console.log(value);
+        }
+
+        const url = 'http://120.48.17.78:8080/api/uploadFile';
+        fetch(url, {
+            method: 'POST',
+            body: formdata,
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "Access-Control-Allow-Origin": "*"
+            },
+        }).then(res => res.json())
+            .then(data => {
+                message.success("删除成功");
+            })
+    };
 
     submitContent = async () => {
         // 在编辑器获得焦点时按下ctrl+s会执行此方法
@@ -461,11 +478,10 @@ class EditorDemo extends React.Component {
                             })(<Input placeholder={PlaceDefault} style={{ width: "40%" }} />)}
                         </Form.Item>
 
-                        {/* 附件上传 */}
-                        <FileUpLoader type="file" bindTo={"MessageEdit"} numberLimit={5} getLink={this.handlegetFile} initialData={this.state.initialFile} />
+                        <input type="file" onChange={this.handleUpload} />
+                        <input type="file" onChange={this.handleUpload} />
 
-                        {/* 图片上传 */}
-                        <FileUpLoader type="image" bindTo={"MessageCover"} numberLimit={1} getLink={this.handlegetImage} initialData={this.state.initialImage} />
+
 
                         <Row>
                             <Col span={16} offset={4}>
@@ -501,6 +517,8 @@ class EditorDemo extends React.Component {
                     </Form>
 
                 </Card>
+
+
             </div>
         )
 
@@ -508,3 +526,68 @@ class EditorDemo extends React.Component {
 
 }
 export default Form.create()(EditorDemo)
+
+// import React, { Component } from 'react'
+
+// class EditorDemo extends Component {
+
+
+//     constructor(props) {
+//         super(props);
+
+//         this.state = {
+//             stream: null,
+//         };
+//     }
+
+//     handleUpload = (e) => {
+//         e.preventDefault();
+//         let file = e.target.files[0];
+//         //let er = readAsBinaryString(file)
+
+//         //console.log(er);
+//         // const formdata = new FormData();
+//         // formdata.append('file', file);
+
+//         // for (var value of formdata.values()) {
+//         //     console.log(value);
+//         // }
+//         let blob = new Blob(file);
+//         console.log(blob);
+
+//         const url = 'http://120.48.17.78:8080/api/uploadFile';
+//         fetch(url, {
+//             method: 'POST',
+//             body: {
+//                 fileUpload: blob
+//             },
+//             headers: {
+//                 "Content-Type": "multipart/form-data"
+//             }
+//         }).then(response => { return response.json(); })
+//             .catch(error => console.log(error));
+//     };
+
+//     test() {
+//         console.log("hello")
+//     }
+
+//     render() {
+//         return (
+//             <div>
+//                 <form action="http://120.48.17.78:8080/api/uploadFile"
+//                     enctype="multipart/form-data" method="POST">
+//                     <input name="fileUpload" type="file" />
+//                     <input type="submit" value="提交" />
+//                 </form>
+//                 <button onClick={this.test}></button>
+//             </div>
+//         );
+//     }
+
+// }
+
+
+
+
+// export default EditorDemo

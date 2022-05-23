@@ -18,6 +18,7 @@ export default class CropperModal extends Component {
     this.state = {
       src: null,
       link: null,
+      can: null,
     };
   }
 
@@ -35,27 +36,30 @@ export default class CropperModal extends Component {
     if (!this.state.submitting) {
       console.log("正在上传图片");
       // TODO: 这里可以尝试修改上传图片的尺寸
+
+      this.state.can = this.cropper.getCroppedCanvas()
+
       this.cropper.getCroppedCanvas().toBlob(async (blob) => {
-        // const { apiPath, requset } = uploadPic(blob);
-        // this.setState({ submitting: true });
-        // fetchApi(apiPath, requset)
-        //     .then(res => res.json())
-        //     .then(
-        //         data => {
-        //             this.props.onUploadedFile(data.data.path);
-        //             console.log(data.data.path)
-        //             this.setState({ submitting: false });
-        //             this.props.onSubmit(blob);
-        //             this.props.onClose();
-        //         }
-        //     )
-        // console.log(blob)
-        // 创造提交表单数据对象
+        const { apiPath, requset } = uploadPic(blob);
+        this.setState({ submitting: true });
+        fetchApi(apiPath, requset)
+          .then(res => res.json())
+          .then(
+            data => {
+              this.props.onUploadedFile(data.data.path);
+              console.log(data.data.path)
+              this.setState({ submitting: false });
+              this.props.onSubmit(blob);
+              this.props.onClose();
+            }
+          )
+        console.log(blob)
+        //创造提交表单数据对象
         const formData = new FormData();
         // 添加要上传的文件
         let filename = this.props.uploadedImageFile.name;
         formData.append("file", blob, filename);
-        let url = `https://xuegong.twt.edu.cn/api/uploadPic`;
+        let url = `http://120.48.17.78:8080/api/uploadFile`;
         const settings = {
           method: "POST",
           body: formData,
@@ -111,7 +115,10 @@ export default class CropperModal extends Component {
           <div className="button-row">
             <div className="submit-button" onClick={this.handleSubmit}>
               提交
+              <img src={this.state.can} />
+
             </div>
+
           </div>
         </div>
       </div>

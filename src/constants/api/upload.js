@@ -3,7 +3,7 @@ export const uploadPic = (file) => {
     let formdata = new FormData();
     formdata.append("file", file)
     return {
-        apiPath: 'uploadPic',
+        apiPath: 'uploadFile',
         request: {
             body: formdata,
             method: "POST",
@@ -17,7 +17,7 @@ export const uploadApp = (file) => {
     let formdata = new FormData();
     formdata.append("file", file)
     return {
-        apiPath: 'uploadApp',
+        apiPath: 'uploadFile',
         request: {
             body: formdata,
             method: "POST",

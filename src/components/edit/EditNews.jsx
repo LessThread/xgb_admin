@@ -440,6 +440,14 @@ class EditorDemo extends React.Component {
                         </Col>
                     </Form>
                 </Card>
+
+                <div>
+                    <form action="http://120.48.17.78:8080/api/uploadFile"
+                        enctype="multipart/form-data" method="POST">
+                        <input name="fileUpload" type="file" id="fileUpload" />
+                        <input type="submit" value="提交" />
+                    </form>
+                </div>
             </div>
         )
     }

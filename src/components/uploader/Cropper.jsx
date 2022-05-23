@@ -14,6 +14,7 @@ export default class ImgCropper extends Component {
       modalVisible: false,
       modalFile: null,
       resultImgUrl: null,
+      can: null,
     };
   }
 
