@@ -41,24 +41,26 @@ export default class CropperModal extends Component {
 
       this.cropper.getCroppedCanvas().toBlob(async (blob) => {
         const { apiPath, requset } = uploadPic(blob);
+
         this.setState({ submitting: true });
-        fetchApi(apiPath, requset)
-          .then(res => res.json())
-          .then(
-            data => {
-              this.props.onUploadedFile(data.data.path);
-              console.log(data.data.path)
-              this.setState({ submitting: false });
-              this.props.onSubmit(blob);
-              this.props.onClose();
-            }
-          )
+
+        // fetchApi(apiPath, requset)
+        //   .then(res => res.json())
+        //   .then(
+        //     data => {
+        //       this.props.onUploadedFile(data.data.path);
+        //       console.log(data.data.path)
+        //       this.setState({ submitting: false });
+        //       this.props.onSubmit(blob);
+        //       this.props.onClose();
+        //     }
+        //   )
         console.log(blob)
         //创造提交表单数据对象
         const formData = new FormData();
         // 添加要上传的文件
         let filename = this.props.uploadedImageFile.name;
-        formData.append("file", blob, filename);
+        formData.append("fileUpload", blob, filename);
         let url = `http://120.48.17.78:8080/api/uploadFile`;
         const settings = {
           method: "POST",
@@ -73,11 +75,12 @@ export default class CropperModal extends Component {
           .then((data) => {
             // console.log("aaa")
             // console.log(data.data.path)
-            //sessionStorage.setItem("imgUrl", data.data.path);
-            //this.props.getLink(data.data.path);
-            // if(this.props.)
-            // this.setState({
-            //     link: data.data.path
+            sessionStorage.setItem("imgUrl", data.data.path);
+            this.props.getLink(data.data.path);
+            console.log(data.data.path)
+            //if(this.props.)
+            //this.setState({
+            //  link: data.data.path
             // })
           });
         // 把选中裁切好的的图片传出去
@@ -116,6 +119,7 @@ export default class CropperModal extends Component {
             <div className="submit-button" onClick={this.handleSubmit}>
               提交
               <img src={this.state.can} />
+              <div style={{ backgroundColor: `red`, }}>Debug</div>
 
             </div>
 
