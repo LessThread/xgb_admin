@@ -21,8 +21,8 @@ class AutoPlay extends React.Component {
             if (data.length > 0) {
                 for (let i = 0; i < data.length; i++) {
                     elements.push(
-                        <div className="bg-element" key="BgElement" style={{ backgroundImage: `url(${"http://120.48.17.78:8080/api/downLoadFile?fileName=" + data[i].picture})` }}>
-                            <img key="bg-img" className="bg-img" alt="轮播图预览" src={"http://120.48.17.78:8080/api/downLoadFile?fileName=" + data[i].picture} />
+                        <div className="bg-element" key="BgElement" style={{ backgroundImage: `url(${"http://120.48.17.78:8080/" + data[i].picture})` }}>
+                            <img key="bg-img" className="bg-img" alt="轮播图预览" src={"http://120.48.17.78:8080/" + data[i].picture} />
                         </div>
                     )
                 }

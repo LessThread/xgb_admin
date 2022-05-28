@@ -65,6 +65,8 @@ class BannerList extends Component {
                         catData: data.data,
                         isCatLoaded: true,
                     })
+
+                    console.log(this.state.catData)
                 });
         }
         if (!this.state.isBannerLoaded) {
@@ -77,6 +79,9 @@ class BannerList extends Component {
                         banData: data.data,
                         isBannerLoaded: true,
                     })
+
+                    console.log("*****")
+                    console.log(this.state.banData)
                 });
         }
     }
