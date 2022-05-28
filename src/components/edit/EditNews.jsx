@@ -12,6 +12,7 @@ import { postNewsMessage, editNewsMessage, editMessage } from '../../constants/a
 import 'braft-editor/dist/index.css';
 import 'braft-extensions/dist/table.css';
 import Table from 'braft-extensions/dist/table';
+import './form.scss';
 
 const { Option, OptGroup } = Select;
 const { MonthPicker } = DatePicker;
@@ -371,6 +372,7 @@ class EditorDemo extends React.Component {
                                 <Button size="default" type="default" htmlType="submit" >保存</Button>
                             </Col>
                         </Form.Item>
+
                         <Form.Item label="所属栏目" >
                             {getFieldDecorator('section', {
                                 rules: [{
@@ -383,6 +385,7 @@ class EditorDemo extends React.Component {
                                 </Select>
                             )}
                         </Form.Item>
+
                         <Form.Item label="标题名称">
                             {getFieldDecorator('title', {
                                 rules: [{
@@ -410,10 +413,10 @@ class EditorDemo extends React.Component {
                                 initialValue: this.state.initialJournalist,
                             })(<Input placeholder={"不超过20字"} style={{ width: "40%" }} />)}
                         </Form.Item>
-                        {/* 附件上传 */}
-                        <FileUpLoader type="file" bindTo={"MessageEdit"} numberLimit={5} getLink={this.handlegetFile} initialData={this.state.initialFile} />
-                        {/* 图片上传 */}
-                        <FileUpLoader type="image" bindTo={"MessageCover"} numberLimit={1} getLink={this.handlegetImage} initialData={this.state.initialImage} />
+
+                        {/* <FileUpLoader type="file" bindTo={"MessageEdit"} numberLimit={5} getLink={this.handlegetFile} initialData={this.state.initialFile} /> */}
+
+
                         <Row>
                             <Col span={16} offset={4}>
                                 <Form.Item>
@@ -439,18 +442,56 @@ class EditorDemo extends React.Component {
                             <Button loading={this.state.isPosting} size="default" type="default" htmlType="submit" >保存</Button>
                         </Col>
                     </Form>
+
+                    <br></br>
+
+                    <div id='Debug'>
+
+                        <form target="" id='Deform' action="http://120.48.17.78:8080/api/uploadFile" enctype="multipart/form-data" method="POST">
+                            <div className='button-box'>
+                                <div className="put">
+                                    <input name="fileUpload" type="file" className="inputs" />
+                                </div>
+                                <div className='boxcover'>
+                                    选择文件
+                                </div>
+                            </div>
+                        </form>
+
+                        <form method="post" id='Deform2'>
+                            <div className='button-box'>
+                                <div className="put">
+                                    <input type="submit" formtarget="targetIfr" form='Deform' value="提交" className="inputs" />
+                                </div>
+                                <div className='boxcover'>
+                                    提交
+                                </div>
+                            </div>
+                        </form>
+
+                        <iframe name="targetIfr" style={{ display: "none" }}></iframe>
+                    </div>
+
                 </Card>
 
-                <iframe name="targetIfr" style={{ display: "none" }}></iframe>
 
-                <div>
-                    <form target="" id='form1' action="http://120.48.17.78:8080/api/uploadFile" enctype="multipart/form-data" method="POST">
+
+                {/* <div>
+
+                    <form target="" id='form1' action="http://120.48.17.78:8080/api/uploadFile"
+                        enctype="multipart/form-data" method="POST">
                         <input name="fileUpload" type="file" id="fileUpload" />
                     </form>
+
                     <form method="post">
                         <input type="submit" formtarget="targetIfr" form='form1' value="提交" />
                     </form>
-                </div>
+
+                    <iframe name="targetIfr" style={{ display: "none" }}></iframe>
+                </div> */}
+
+
+
             </div>
         )
     }

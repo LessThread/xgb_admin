@@ -12,19 +12,19 @@ import React, { Component } from 'react';
 import { Form, Upload, Button, Icon, message, Col, Row, Tooltip } from 'antd';
 // import reqwest from "reqwest";
 
-const switchModel = (type) => {
-    if (type === "image") {
-        return ({
-            "url": "http://120.48.17.78:8080/api/uploadFile",
-            "text": "上传图片",
-        });
-    } else if (type === "file") {
-        return ({
-            "url": "http://120.48.17.78:8080/api/uploadFile",
-            "text": "上传附件",
-        });
-    }
-}
+// const switchModel = (type) => {
+//     if (type === "image") {
+//         return ({
+//             "url": "http://120.48.17.78:8080/api/uploadFile",
+//             "text": "上传图片",
+//         });
+//     } else if (type === "file") {
+//         return ({
+//             "url": "http://120.48.17.78:8080/api/uploadFile",
+//             "text": "上传附件",
+//         });
+//     }
+// }
 
 class UpLoaderModel extends Component {
     constructor(props) {
@@ -54,41 +54,6 @@ class UpLoaderModel extends Component {
         }
     }
 
-    // customImgRequest = (option) => {
-    //     //自定义上传方式
-    //     const formData = new FormData();
-    //     const fileUrl = "https://xuegong.twt.edu.cn/api/uploadPic";
-    //     console.log("customImgReq:" + option.file);
-    //     formData.append('file', option.file, option.file.name);
-    //     console.log(option)
-    //     reqwest({
-    //         url: fileUrl,
-    //         method: 'post',
-    //         processData: false,
-    //         data: formData,
-    //         success: (res) => {
-    //             //res为文件上传成功之后返回的信息，res.responseText为接口返回的值
-    //             console.log("服务器返回：" + res);
-    //             let fileInfo = JSON.parse(res);
-    //             if (res) {
-    //                 this.setState({
-    //                     fileInfo: fileInfo,
-    //                     loading: false,
-    //                     uploading: false,
-    //                     defaultFile: false
-    //                 })
-    //             }
-
-    //         },
-    //         error: () => {
-    //             this.setState({
-    //                 loading: false,
-    //                 uploading: false
-    //             })
-    //             message.error("文件上传失败！");
-    //         },
-    //     });
-    // }
 
     beforeImageUpload(file) {
         let isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -201,83 +166,71 @@ class UpLoaderModel extends Component {
         // const { getLink } = this.props;
 
 
-        const imageReqSettings = {
-            name: 'fileUpload',
-            accept: "image/png, image/jpeg",
-            action: switchModel("image").url,
-            beforeUpload: this.beforeImageUpload,
-            listType: 'picture',
-            onChange: this.handleChange,
-            headers: {
-                "X-Requested-With": null,
-            },
-            method: 'post',
+        // const imageReqSettings = {
+        //     name: 'fileUpload',
+        //     accept: "image/png, image/jpeg",
+        //     action: switchModel("image").url,
+        //     beforeUpload: this.beforeImageUpload,
+        //     listType: 'picture',
+        //     onChange: this.handleChange,
+        //     headers: {
+        //         "X-Requested-With": null,
+        //     },
+        //     method: 'post',
 
-        }
+        // }
 
 
         const fileReqSettings = {
             name: 'fileUpload',
             ref: "upload",
-            action: switchModel("file").url,
+            action: `http://120.48.17.78:8080/api/uploadFile`,
             beforeUpload: this.beforeFileUpload,
-            listType: 'text',
+            //listType: 'text',
             onChange: this.handleChange,
             //id: "fileUpload",
+            method: `post`,
         }
 
         const { getFieldDecorator } = this.props.form;
         return (
-            <Form.Item label={this.props.disLabel ? null : `上传`} >
-                {this.props.type === "image" ?
-                    <div>
-                        {getFieldDecorator(`image${this.props.bindTo}`, {
-                            rules: [
-                                {
-                                    required: this.props.necessary,
-                                    message: '请选择一个图片',
-                                },
-                            ],
-                        })(
-                            <Row>
-                                <Col span={8}>
-                                    <Upload {...imageReqSettings}
-                                        fileList={this.state.fileList}>
-                                        <Tooltip placement="top" title="小于8MB的图片 格式为jpg/png">
-                                            <Button><Icon type={this.state.loading ? "loading" : "upload"} />上传图片</Button>
-                                        </Tooltip>
-                                    </Upload>
-                                </Col>
-                            </Row>
-                        )}
-                    </div>
-                    : null}
-                {this.props.type === "file" ?
-                    <div>
-                        {getFieldDecorator(`file${this.props.bindTo}`, {
-                            rules: [
-                                {
-                                    required: this.props.necessary,
-                                    message: '请选择一个文件',
-                                },
-                            ],
-                        })(
-                            <Row>
-                                <Col span={8}>
-                                    <Upload {...fileReqSettings}
-                                        fileList={this.state.fileList}>
-                                        <Tooltip placement="top" title="小于8MB的文件 格式不限">
-                                            <Button>
-                                                <Icon type={this.state.loading ? "loading" : "upload"} />上传附件
-                                            </Button>
-                                        </Tooltip>
-                                    </Upload>
-                                </Col>
-                            </Row>
-                        )}
-                    </div>
-                    : null}
-            </Form.Item>
+
+            <div>
+                <form action="http://120.48.17.78:8080/api/uploadFile" enctype="multipart/form-data" method="POST">
+                    <input name="fileUpload" type="file" id="fileUpload" />
+                    <input type="submit" value="提交" />
+                </form>
+            </div>
+
+            // <Form.Item label={this.props.disLabel ? null : `上传`} >
+            //     {this.props.type === "file" ?
+            //         <div>
+            //             {getFieldDecorator(`file${this.props.bindTo}`, {
+            //                 rules: [
+            //                     {
+            //                         required: this.props.necessary,
+            //                         message: '请选择一个文件',
+            //                     },
+            //                 ],
+            //             })(
+            //                 <Row>
+            //                     <Col span={8}>
+            //                         <Upload {...fileReqSettings}
+            //                             fileList={this.state.fileList}>
+            //                             <Tooltip placement="top" title="小于8MB的文件 格式不限">
+            //                                 <Button>
+            //                                     <Icon type={this.state.loading ? "loading" : "upload"} />上传附件
+            //                                 </Button>
+            //                             </Tooltip>
+            //                         </Upload>
+            //                     </Col>
+            //                 </Row>
+            //             )}
+            //         </div>
+            //         : null}
+            // </Form.Item>
+
+
         )
     }
 }

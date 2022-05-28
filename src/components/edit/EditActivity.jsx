@@ -478,8 +478,8 @@ class EditorDemo extends React.Component {
                             })(<Input placeholder={PlaceDefault} style={{ width: "40%" }} />)}
                         </Form.Item>
 
-                        <input type="file" onChange={this.handleUpload} />
-                        <input type="file" onChange={this.handleUpload} />
+                        {/* <input type="file" onChange={this.handleUpload} />
+                        <input type="file" onChange={this.handleUpload} /> */}
 
 
 
@@ -515,6 +515,7 @@ class EditorDemo extends React.Component {
                         </Col>
 
                     </Form>
+
 
                 </Card>
 
