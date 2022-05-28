@@ -51,7 +51,7 @@
 
 // }
 
-.put {
+div.put {
     display: inline-block;
     width: 100px;
     height: 20px;
@@ -65,13 +65,62 @@
     display: none;
 }
 
-.put input {
-    //position: absolute;
+div.put input {
+    position: absolute;
     left: 0px;
     top: 0px;
-    zoom: 1;
+    //zoom: 1;
     //filter: alpha(opacity=0);
-    //opacity: 0;
-    font-size: 20px;
-    margin-left: -240px;
+    opacity: 0;
+    font-size: 16px;
+    //margin-left: -240px;
+}
+
+.Deform {
+    //display: none;
+}
+
+
+.file-box {
+    position: relative;
+    width: 340px;
+    margin: 20px;
+}
+
+.txt {
+    height: 28px;
+    line-height: 28px;
+    border: 1px solid #cdcdcd;
+    width: 180px;
+}
+
+.btn {
+    width: 70px;
+    color: #fff;
+    background-color: #3598dc;
+    border: 0 none;
+    height: 28px;
+    line-height: 16px !important;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #63bfff;
+    color: #fff;
+}
+
+.file {
+    position: absolute;
+    top: 0;
+    right: 85px;
+    height: 30px;
+    line-height: 30px;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    width: 254px
+}
+
+.ife {
+    frameborder: 0;
+    display: none;
 }

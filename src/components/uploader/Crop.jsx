@@ -73,8 +73,8 @@ export default class CropperModal extends Component {
           .then((data) => {
             // console.log("aaa")
             // console.log(data.data.path)
-            sessionStorage.setItem("imgUrl", data.data.path);
-            this.props.getLink(data.data.path);
+            //sessionStorage.setItem("imgUrl", data.data.path);
+            //this.props.getLink(data.data.path);
             // if(this.props.)
             // this.setState({
             //     link: data.data.path

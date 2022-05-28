@@ -40,6 +40,7 @@ class EditorDemo extends React.Component {
             imglist: null,
             iconlist: null,
             isPosting: false,
+            fname: "",
         }
     }
 
@@ -317,6 +318,31 @@ class EditorDemo extends React.Component {
         })
     }
 
+    handleChange = (e) => {
+        //console.log(f.value)
+
+    }
+
+    change(e) {
+        //alert(e.target)
+        let dom = e.target;
+        this.setState({
+            fname: dom.value
+        })
+        //alert(this.state.fname)
+        //alert(dom.value)
+    }
+
+    fchange() {
+        alert("hi")
+    }
+
+    sub(e) {
+        alert("上传成功")
+    }
+
+
+
     render() {
         console.log(this.state.isPosting)
         let appendixList = sessionStorage.getItem('filepath');
@@ -361,6 +387,8 @@ class EditorDemo extends React.Component {
                 onClick: this.preview,
             }
         ];
+
+
 
         return (
             <div className="my-component">
@@ -444,54 +472,46 @@ class EditorDemo extends React.Component {
                     </Form>
 
                     <br></br>
+                    <br></br>
+                    <br></br>
 
                     <div id='Debug'>
 
-                        <form target="" id='Deform' action="http://120.48.17.78:8080/api/uploadFile" enctype="multipart/form-data" method="POST">
-                            <div className='button-box'>
-                                <div className="put">
-                                    <input name="fileUpload" type="file" className="inputs" />
-                                </div>
-                                <div className='boxcover'>
-                                    选择文件
-                                </div>
+                        <div class="file-box">
+                            <form id="uploadForm" target="frameName" action="http://120.48.17.78:8080/api/uploadFile"
+                                enctype="multipart/form-data" method="POST" onSubmit={this.sub}>
+                                <input type="text" id="textfield" class="txt" value={this.state.fname} />
+                                <input type="button" class="btn" value="浏览..." />
+                                <input type="file" name="fileUpload"
+                                    class="file" id="fileField"
+                                    onChange={(e) => this.change(e)}
+                                />
+                                <input type="submit" class="btn" value="上传" />
+                            </form>
+                        </div>
+
+                        <iframe name="frameName" style={{ display: `none` }}></iframe>
+
+                        {/* <form target="" className='Deform1' action="http://120.48.17.78:8080/api/uploadFile" enctype="multipart/form-data" method="POST">
+                            <div className="puts">
+                                <input type="text" id="textfield" className="txt"></input>
+                                <input type="button" className='btn' value="浏览..."></input>
+
+                                <input className='file' id='fileField' name="fileUpload" type="file"
+                                    onChange={this.change} />
                             </div>
                         </form>
 
-                        <form method="post" id='Deform2'>
-                            <div className='button-box'>
-                                <div className="put">
-                                    <input type="submit" formtarget="targetIfr" form='Deform' value="提交" className="inputs" />
-                                </div>
-                                <div className='boxcover'>
-                                    提交
-                                </div>
+                        <form method="post" className='Deform2'>
+                            <div className="puts">
+                                <input type="submit" formtarget="targetIfr" class="btn" value="提交" form='Deform1' className="inputs" />
                             </div>
-                        </form>
+                        </form> */}
 
-                        <iframe name="targetIfr" style={{ display: "none" }}></iframe>
+                        {/* <iframe name="targetIfr" style={{ display: "none" }} onChange={this.fchange}></iframe> */}
                     </div>
 
                 </Card>
-
-
-
-                {/* <div>
-
-                    <form target="" id='form1' action="http://120.48.17.78:8080/api/uploadFile"
-                        enctype="multipart/form-data" method="POST">
-                        <input name="fileUpload" type="file" id="fileUpload" />
-                    </form>
-
-                    <form method="post">
-                        <input type="submit" formtarget="targetIfr" form='form1' value="提交" />
-                    </form>
-
-                    <iframe name="targetIfr" style={{ display: "none" }}></iframe>
-                </div> */}
-
-
-
             </div>
         )
     }

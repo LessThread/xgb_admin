@@ -340,6 +340,27 @@ class EditorDemo extends React.Component {
         });
     }
 
+
+
+    change(e) {
+        //alert(e.target)
+        let dom = e.target;
+        this.setState({
+            fname: dom.value
+        })
+        //alert(this.state.fname)
+        //alert(dom.value)
+    }
+
+    fchange() {
+        alert("hi")
+    }
+
+    sub(e) {
+        alert("上传成功")
+    }
+
+
     render() {
         // console.log(this.state.isPosting)
         const { editorState } = this.state;
@@ -516,6 +537,28 @@ class EditorDemo extends React.Component {
 
                     </Form>
 
+                    <br></br>
+                    <br></br>
+                    <br></br>
+
+                    <div id='Debug'>
+
+                        <div class="file-box">
+                            <form id="uploadForm" target="frameName" action="http://120.48.17.78:8080/api/uploadFile"
+                                enctype="multipart/form-data" method="POST" onSubmit={this.sub}>
+                                <input type="text" id="textfield" class="txt" value={this.state.fname} />
+                                <input type="button" class="btn" value="浏览..." />
+                                <input type="file" name="fileUpload"
+                                    class="file" id="fileField"
+                                    onChange={(e) => this.change(e)}
+                                />
+                                <input type="submit" class="btn" value="上传" />
+                            </form>
+                        </div>
+
+                        <iframe name="frameName" style={{ display: `none` }}></iframe>
+                    </div>
+
 
                 </Card>
 
@@ -527,68 +570,3 @@ class EditorDemo extends React.Component {
 
 }
 export default Form.create()(EditorDemo)
-
-// import React, { Component } from 'react'
-
-// class EditorDemo extends Component {
-
-
-//     constructor(props) {
-//         super(props);
-
-//         this.state = {
-//             stream: null,
-//         };
-//     }
-
-//     handleUpload = (e) => {
-//         e.preventDefault();
-//         let file = e.target.files[0];
-//         //let er = readAsBinaryString(file)
-
-//         //console.log(er);
-//         // const formdata = new FormData();
-//         // formdata.append('file', file);
-
-//         // for (var value of formdata.values()) {
-//         //     console.log(value);
-//         // }
-//         let blob = new Blob(file);
-//         console.log(blob);
-
-//         const url = 'http://120.48.17.78:8080/api/uploadFile';
-//         fetch(url, {
-//             method: 'POST',
-//             body: {
-//                 fileUpload: blob
-//             },
-//             headers: {
-//                 "Content-Type": "multipart/form-data"
-//             }
-//         }).then(response => { return response.json(); })
-//             .catch(error => console.log(error));
-//     };
-
-//     test() {
-//         console.log("hello")
-//     }
-
-//     render() {
-//         return (
-//             <div>
-//                 <form action="http://120.48.17.78:8080/api/uploadFile"
-//                     enctype="multipart/form-data" method="POST">
-//                     <input name="fileUpload" type="file" />
-//                     <input type="submit" value="提交" />
-//                 </form>
-//                 <button onClick={this.test}></button>
-//             </div>
-//         );
-//     }
-
-// }
-
-
-
-
-// export default EditorDemo
