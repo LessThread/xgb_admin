@@ -41,19 +41,20 @@ class BannerModify extends Component {
         this.setState({ isListLoaded: false })
         let { apiPath, request } = getNavAllArticle(columnValue);
         fetchApi(apiPath, request)
+
             .then(res => res.json())
             .then(data => {
                 let temp = [];
-                let mes = data.data.message;
-                for (let i = 0; i < mes.length; i++) {
-                    temp.push(
-                        <Option key={columnValue + "--" + mes[i].id} value={mes[i].id}>{mes[i].title}</Option>
-                    )
-                }
-                this.setState({
-                    isListLoaded: true,
-                    mesList: temp,
-                })
+                // let mes = data.data.message;
+                // for (let i = 0; i < mes.length; i++) {
+                //     temp.push(
+                //         <Option key={columnValue + "--" + mes[i].id} value={mes[i].id}>{mes[i].title}</Option>
+                //     )
+                // }
+                // this.setState({
+                //     isListLoaded: true,
+                //     mesList: temp,
+                // })
             });
     }
 
@@ -89,28 +90,28 @@ class BannerModify extends Component {
                 //这是个新增的！调用add
                 //这里因为调用了cropper，将link改为了imglink，下同
                 let { apiPath, request } = addBanner(link, values[thisTitle], values[thisColumn], values[i], i + 1);
-                // fetchApi(apiPath, request)
-                //     .then(res => res.json())
-                //     .then(data => {
-                //         if (data.error_code === 0) {
-                //             message.success(`添加成功`);
-                //         } else {
-                //             message.error(`添加失败`);
-                //         }
-                //     })
+                fetchApi(apiPath, request)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.error_code === 0) {
+                            message.success(`添加成功`);
+                        } else {
+                            message.error(`添加失败`);
+                        }
+                    })
             } else {
                 //这是个原有的！调用update
                 // console.log('改了！' + this.props.data[i].id)
                 let { apiPath, request } = editBanner(link, values[thisTitle], values[thisColumn], values[i], i + 1, this.props.banData.id);
-                // fetchApi(apiPath, request)
-                //     .then(res => res.json())
-                //     .then(data => {
-                //         if (data.error_code === 0) {
-                //             message.success(`修改成功`);
-                //         } else {
-                //             message.error(`修改失败`);
-                //         }
-                //     })
+                fetchApi(apiPath, request)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.error_code === 0) {
+                            message.success(`修改成功`);
+                        } else {
+                            message.error(`修改失败`);
+                        }
+                    })
             }
         })
     }
@@ -143,6 +144,7 @@ class BannerModify extends Component {
                             {getFieldDecorator(`column${index}`, {
                                 rules: [
                                     {
+
                                         required: true,
                                         message: '请选择一个栏目',
                                     },

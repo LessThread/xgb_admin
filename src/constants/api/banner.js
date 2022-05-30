@@ -17,7 +17,7 @@ export const addBanner = (pic, title, nav_id, mes_id, rank) => {
     formdata.append("mes_id", mes_id);
     formdata.append("rank", rank);
     return {
-        apiPath: `banner`,
+        apiPath: `banner/update`,
         request: {
             method: "POST",
             mode: 'no-cors',
@@ -36,8 +36,9 @@ export const editBanner = (pic, title, nav_id, mes_id, rank, id) => {
     formdata.append("nav_id", nav_id);
     formdata.append("mes_id", mes_id);
     formdata.append("rank", rank);
+    formdata.append("id", id);
     return {
-        apiPath: `banner/` + id,
+        apiPath: `banner/update`,
         request: {
             method: "POST",
             mode: 'no-cors',
@@ -52,7 +53,7 @@ export const editBanner = (pic, title, nav_id, mes_id, rank, id) => {
 
 export const delBanner = (id) => {
     return {
-        apiPath: `banner/delete?id=`,   //`delbanner/` + id,
+        apiPath: `banner/delete?id=` + id,
         request: {
             method: "POST",
             mode: 'no-cors',
