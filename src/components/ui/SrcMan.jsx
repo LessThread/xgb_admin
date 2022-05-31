@@ -369,18 +369,25 @@ class Src extends React.Component {
     confirmDelete = (notify) => {
         return <LocalizedModal onConfirm={this.handleDelete} data={notify} />
     }
+
+
+
+
     render() {
         const { navMenu, introduct, subordNavIndex } = this.state;
         console.log("introduct")
         console.log(introduct)
+
         return (
             <div>
                 <BreadcrumbCustom first="资源管理" />
+
                 <div>
                     <Tabs defaultActiveKey="0" tabPosition="left" onChange={this.callback}>
                         {navMenu ? this.renderSideMenu() : <Spin tip="Loading..." size="large" />}
                     </Tabs>
                 </div>
+
                 <div className={(introduct[subordNavIndex] ? introduct[subordNavIndex] : 0) && introduct[subordNavIndex].length > 0 ? "resource-jump" : "resource-margin"} >
                     <Col span={8} offset={3}>
                         <label>移动到：</label>
