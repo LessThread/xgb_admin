@@ -8,7 +8,7 @@ import BreadcrumbCustom from '../BreadcrumbCustom';
 import LocalizedModal from '../ui/Modals';
 import { CONFIRM_JUMP, CONFIRM_DELETE } from '../../constants/common';
 import { fetchApi } from '../../callApi';
-import { getNavAllArticle } from '../../constants/api/navi';
+import { ADMIN_nav_list, getNavAllArticle } from '../../constants/api/navi';
 import { removeArticle, deleteArticle } from '../../constants/api/source';
 import { getCateLists } from '../../constants/api/category';
 const { TabPane } = Tabs;
@@ -103,25 +103,26 @@ class Src extends React.Component {
         fetchApi(api, quest)
             .then(res => res.json())
             .then(data => {
+                console.log("data.data")
+                console.log(data.data);
                 this.setState({
                     navMenu: data.data,
                     firstID: data.data[0].id
                 })
                 if (this.state.firstID) {
-                    const { apiPath, request } = getNavAllArticle(1)//this.state.firstID);
+                    const { apiPath, request } = ADMIN_nav_list(1)//this.state.firstID);
                     fetchApi(apiPath, request)
                         .then(res => res.json())
                         .then(data => {
-                            //alert(apiPath)
-                            //有数据了。更新第一个二级导航的数据。
-                            // console.log(data)
-                            let arr = [];
-                            arr[0] = data.data;
-                            this.setState({
-                                introduct: arr,
-                                subordNavID: this.state.navMenu[0].id,
-                                subordNavIndex: 0
-                            })
+                            console.log("data");
+                            console.log(data)
+                            // let arr = [];
+                            // arr[0] = data.data;
+                            // this.setState({
+                            //     introduct: arr,
+                            //     subordNavID: this.state.navMenu[0].id,
+                            //     subordNavIndex: 0
+                            // })
                         })
                 }
             });
@@ -170,7 +171,7 @@ class Src extends React.Component {
 
     TextData = (introduce) => {
         const { subordNavID } = this.state
-        return introduce.message.map((key, i) => {
+        return introduce.map((key, i) => {
             const { id, created_at, title } = key;
             let data = {
                 navID: subordNavID,
@@ -191,7 +192,7 @@ class Src extends React.Component {
 
     ActiData = (introduce) => {
         const { subordNavID } = this.state
-        return introduce.message.map((key, i) => {
+        return introduce.map((key, i) => {
             const { id, created_at, title, start_time } = key
             let data = {
                 navID: subordNavID,
@@ -213,7 +214,7 @@ class Src extends React.Component {
 
     PicData = (introduce) => {
         const { subordNavID } = this.state
-        return introduce.message.map((key, i) => {
+        return introduce.map((key, i) => {
             const { id, icon, created_at, title, content } = key;
             let str = `${root}${icon}`;
             let data = {
@@ -289,7 +290,7 @@ class Src extends React.Component {
             subordNavIndex: key
         })
         if (!introduct[key] || introduct[key].message === undefined) {
-            const { apiPath, request } = getNavAllArticle(navMenu[key].id);
+            const { apiPath, request } = ADMIN_nav_list(navMenu[key].id);
             fetchApi(apiPath, request)
                 .then(res => res.json())
                 .then(data => {
@@ -370,6 +371,7 @@ class Src extends React.Component {
     }
     render() {
         const { navMenu, introduct, subordNavIndex } = this.state;
+        console.log("introduct")
         console.log(introduct)
         return (
             <div>

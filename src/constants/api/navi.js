@@ -1,3 +1,5 @@
+import { request } from "screenfull"
+
 //获取二级导航下所有文章
 export const getNavAllArticle = (id) => {
     return {
@@ -83,3 +85,12 @@ export const saveSecNavSort = (body) => {
 
 
 
+
+export const ADMIN_nav_list = () => {
+    return {
+        apiPath: `Article/getByPage?nav_id=87&pageNum=1&pageSize=15`,
+        request: {
+            method: `GET`,
+        }
+    }
+}

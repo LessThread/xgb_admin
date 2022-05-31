@@ -1,6 +1,6 @@
 export const getCateLists = () => {
     return {
-        apiPath: 'getAllCategory',
+        apiPath: 'getCategory/list',
         request: {
             method: 'GET'
         }
