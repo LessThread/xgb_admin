@@ -47,6 +47,7 @@ class Src extends React.Component {
             value: [],
             selectVal: null,
             isdel: `none`,
+            ismov: `none`,
         };
         this.handleClick = this.handleClick.bind(this);
     }
@@ -153,7 +154,8 @@ class Src extends React.Component {
 
     del1 = () => {
         this.setState({
-            isdel: `block`
+            isdel: `block`,
+            ismov: `none`
         })
     }
 
@@ -208,6 +210,19 @@ class Src extends React.Component {
         )
     }
 
+    mov = () => {
+        this.setState({
+            ismov: `block`,
+        })
+    }
+
+    changeSel1 = () => {
+        this.setState({
+            ismov: `block`,
+            isdel: `none`
+        })
+    }
+
 
 
     render() {
@@ -247,7 +262,7 @@ class Src extends React.Component {
                             </div>
 
                             <div className='operateBox'>
-                                <button className='operateBut' onClick={this.changeSel}>移&emsp;动</button>
+                                <button className='operateBut' onClick={this.changeSel1}>移动到</button>
                                 <button className='operateBut' id="del" onClick={this.del1}>删&emsp;除</button>
                             </div>
 
@@ -258,7 +273,7 @@ class Src extends React.Component {
                                 <button onClick={this.del3} className='operateBut'>取&emsp; 消</button>
                             </div>
 
-                            <div className='operateBox'>
+                            <div className='operateBox' style={{ display: this.state.ismov }}>
                                 <h3>移动到</h3>
                                 <select className='dropdown' onChange={this.handleSelectChange.bind(this)}>
                                     <option value={86} onChange>理论学习</option>
@@ -268,6 +283,7 @@ class Src extends React.Component {
                                     <option value={84}>一院一品</option>
                                     <option value={85}>通知公告</option>
                                 </select>
+                                <button onClick={this.changeSel} className="operateBut">确认移动</button>
                             </div>
 
                         </div>
