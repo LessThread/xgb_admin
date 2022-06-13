@@ -44,11 +44,12 @@ class Src extends React.Component {
             pageSize: 10,
             accdat: [],
             isFinished: 0,
+            traTo: null,
         };
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentWillMount() { //获取sideMenu和第一个数组的信息。
+    componentWillMount() {
         fetch(`http://120.48.17.78:8080/api/Article/getByPage?nav_id=` + this.state.nav_id + `&pageNum=` + this.state.pageNum + `&pageSize=` + this.state.pageSize, setting)
             .then(function (response) {
                 return response.json();
@@ -99,14 +100,43 @@ class Src extends React.Component {
         if (this.state.isFinished) {
             return this.state.accdat.map((item, index) => {
                 return (
-                    <div style={{ display: `flex`, }}>
-                        <input type="checkbox" className='checkbox' />
-                        <p className='inP'>{index}</p>
-                        <h3>{item.title}</h3>
+                    <div style={{ display: `flex`, justifyContent: `space-between`, margin: `10px`, }}>
+                        <div style={{ display: `flex`, justifyContent: `space-between` }}>
+
+                            <div style={{ height: `20px`, margin: `5px`, }}>
+                                <br></br>
+                                <input type="checkbox" className='checkbox' value={index} />
+                            </div>
+
+                            <div>
+                                <h3 className='inP'></h3>
+                                <h3>{index + 1}&emsp;{item.title}</h3>
+                                <h4>修改时间:{item.updated_at}</h4>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button className='operateButEdit'>编辑</button>
+                        </div>
+
+
                     </div>
                 )
             })
         }
+    }
+
+    del = () => {
+
+    }
+
+    handleSelectChange(e) {
+        let val = e.target.value
+        // this.setState({
+        //     selectVal: val
+        // })
+        console.log(val)
+        let url = `http://120.48.17.78:8080/api/Article/updateArticleNav`
     }
 
 
@@ -116,52 +146,68 @@ class Src extends React.Component {
         return (
             <div >
                 <BreadcrumbCustom first="资源管理" />
-
                 <div id="root">
 
                     <div id="left">
                         <div>
                             <div id="sad">
-                                <button onClick={() => this.handleClick(87)}>交流园地</button>
+                                <button onClick={() => this.handleClick(87)} className="meau">交流园地</button>
                             </div>
                             <div>
-                                <button onClick={() => this.handleClick(86)}>理论学习</button>
+                                <button onClick={() => this.handleClick(86)} className="meau">理论学习</button>
                             </div>
                             <div>
-                                <button onClick={() => this.handleClick(89)}>学工资讯</button>
+                                <button onClick={() => this.handleClick(89)} className="meau">学工资讯</button>
                             </div>
                             <div>
-                                <button onClick={() => this.handleClick(83)}>专题快报</button>
+                                <button onClick={() => this.handleClick(83)} className="meau">专题快报</button>
                             </div>
                             <div>
-                                <button onClick={() => this.handleClick(84)}>一院一品</button>
+                                <button onClick={() => this.handleClick(84)} className="meau">一院一品</button>
                             </div>
                             <div>
-                                <button onClick={() => this.handleClick(85)}>通知公告</button>
+                                <button onClick={() => this.handleClick(85)} className="meau">通知公告</button>
                             </div>
                         </div>
 
                         <div id="operate">
-                            <div>
-                                <button>移动</button>
-                                <button>删除</button>
+
+                            <div className='operateBox'>
+                                <button className='operateBut'>上一页</button>
+                                <button className='operateBut'>下一页</button>
                             </div>
 
-                            <div>
-                                <h3>移动到</h3>
+                            <div className='operateBox'>
+                                <button className='operateBut' onClick={this.getSel}>移&emsp;动</button>
+                                <button className='operateBut' id="del" onClick={this.del}>删&emsp;除</button>
                             </div>
+
+
+                            <div className='operateBox'>
+                                <h3>移动到</h3>
+                                <select className='dropdown' onChange={this.handleSelectChange.bind(this)}>
+                                    <option value={86} onChange>理论学习</option>
+                                    <option value={87}>交流园地</option>
+                                    <option value={89}>学工资讯</option>
+                                    <option value={83}>专题快报</option>
+                                    <option value={84}>一院一品</option>
+                                    <option value={85}>通知公告</option>
+                                </select>
+                            </div>
+
                         </div>
                     </div>
 
-                </div>
 
 
-                <div id="showinf2">
-                    <div>
-                        {this.show()}
+                    <div id="showinf2">
+                        <div>
+                            {this.show()}
+                        </div>
                     </div>
-                </div>
 
+
+                </div>
 
             </div >
         )
