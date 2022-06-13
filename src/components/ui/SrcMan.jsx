@@ -46,6 +46,7 @@ class Src extends React.Component {
             f5: 0,
             value: [],
             selectVal: null,
+            isdel: `none`,
         };
         this.handleClick = this.handleClick.bind(this);
     }
@@ -150,8 +151,37 @@ class Src extends React.Component {
         console.log(this.state.value)
     }
 
-    del = () => {
-        let url = `http://120.48.17.78:8080/api/Article/multiDelete`
+    del1 = () => {
+        this.setState({
+            isdel: `block`
+        })
+    }
+
+    del3 = () => {
+        this.setState({
+            isdel: `none`
+        })
+    }
+
+    del2 = () => {
+
+        this.setState({
+            isdel: `none`,
+        });
+
+        let lis = this.state.value;
+        let url = `http://120.48.17.78:8080/api/Article/multiDelete?deleteList=` + lis;
+
+        fetch(url, {
+            method: "POST",
+        }).then(
+            this.setState({
+                f5: this.state.f5++,
+            })
+        );
+
+
+
     }
 
     handleSelectChange(e) {
@@ -166,7 +196,12 @@ class Src extends React.Component {
         let sel = this.state.selectVal;
         let lis = this.state.value;
         let url = `http://120.48.17.78:8080/api/Article/updateArticleNav?nav_id=` + sel + `&updataList=` + lis
-        fetch(url).then(
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(
             this.setState({
                 f5: this.state.f5++,
             })
@@ -213,9 +248,15 @@ class Src extends React.Component {
 
                             <div className='operateBox'>
                                 <button className='operateBut' onClick={this.changeSel}>移&emsp;动</button>
-                                <button className='operateBut' id="del" onClick={this.del}>删&emsp;除</button>
+                                <button className='operateBut' id="del" onClick={this.del1}>删&emsp;除</button>
                             </div>
 
+
+                            <div style={{ display: this.state.isdel }} className='operateBox'>
+                                <h4>确认删除</h4>
+                                <button onClick={this.del2} className='operateBut' id="del2">确&emsp; 认</button>
+                                <button onClick={this.del3} className='operateBut'>取&emsp; 消</button>
+                            </div>
 
                             <div className='operateBox'>
                                 <h3>移动到</h3>
