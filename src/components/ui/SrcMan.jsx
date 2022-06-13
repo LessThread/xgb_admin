@@ -1,6 +1,4 @@
-/**
- * Created by hao.cheng on 2017/4/23.
- */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Spin, Select, Button, Table, Tabs, message } from 'antd';
@@ -45,6 +43,9 @@ class Src extends React.Component {
             accdat: [],
             isFinished: 0,
             traTo: null,
+            f5: 0,
+            value: [],
+            selectVal: null,
         };
         this.handleClick = this.handleClick.bind(this);
     }
@@ -56,7 +57,7 @@ class Src extends React.Component {
             })
             .then((res) => {
                 console.log("@")
-                console.log(res)
+                // console.log(res)
                 this.setState({
                     accdat: res.data.res,
                     isFinished: 1,
@@ -78,7 +79,7 @@ class Src extends React.Component {
             })
             .then((res) => {
                 console.log("@")
-                console.log(res)
+                // console.log(res)
                 this.setState({
                     accdat: res.data.res,
                     isFinished: 1,
@@ -105,7 +106,7 @@ class Src extends React.Component {
 
                             <div style={{ height: `20px`, margin: `5px`, }}>
                                 <br></br>
-                                <input type="checkbox" className='checkbox' value={index} />
+                                <input type="checkbox" className='checkbox' value={index} name="message" onChange={this.getInp} />
                             </div>
 
                             <div>
@@ -126,17 +127,50 @@ class Src extends React.Component {
         }
     }
 
-    del = () => {
+    getInp = (event) => {
+        let item = event.target.value;
+        // ...运算符取出参数对象中的所有可遍历属性，拷贝到当前对象之中
+        let items = [...this.state.value];
+        console.log(items)
+        // 查找脚标a
+        let index = items.indexOf(item);
+        // 如果有就剔除，如果没有就加上
+        {
+            index === -1 ? items.push(item) : items.splice(index, 1)
+        }
+        // 更新原有数据
+        console.log("before")
+        console.log(items)
+        console.log(this.state.value)
+        this.setState({
+            value: items
+        });
+        console.log("after")
+        console.log(items)
+        console.log(this.state.value)
+    }
 
+    del = () => {
+        let url = `http://120.48.17.78:8080/api/Article/multiDelete`
     }
 
     handleSelectChange(e) {
         let val = e.target.value
-        // this.setState({
-        //     selectVal: val
-        // })
-        console.log(val)
-        let url = `http://120.48.17.78:8080/api/Article/updateArticleNav`
+        this.setState({
+            selectVal: val
+        });
+
+    }
+
+    changeSel = () => {
+        let sel = this.state.selectVal;
+        let lis = this.state.value;
+        let url = `http://120.48.17.78:8080/api/Article/updateArticleNav?nav_id=` + sel + `&updataList=` + lis
+        fetch(url).then(
+            this.setState({
+                f5: this.state.f5++,
+            })
+        )
     }
 
 
@@ -178,7 +212,7 @@ class Src extends React.Component {
                             </div>
 
                             <div className='operateBox'>
-                                <button className='operateBut' onClick={this.getSel}>移&emsp;动</button>
+                                <button className='operateBut' onClick={this.changeSel}>移&emsp;动</button>
                                 <button className='operateBut' id="del" onClick={this.del}>删&emsp;除</button>
                             </div>
 
