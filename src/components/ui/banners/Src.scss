@@ -33,7 +33,7 @@
     transform: rotate(-45deg);
 }
 
-#root {
+#root444 {
     display: flex;
     width: 100%;
     min-height: 50vw;
@@ -80,7 +80,9 @@
 }
 
 .operateBox {
-    margin: 10px;
+    margin: 3px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .operateBut {
@@ -98,7 +100,7 @@
     cursor: pointer;
 }
 
-#del {
+#del2 {
     background-color: rgb(238, 74, 74);
 }
 
@@ -117,6 +119,10 @@
     cursor: pointer;
 }
 
-#del2 {
+#del {
+    background-color: rgb(6, 146, 240);
+}
+
+.red {
     background-color: rgb(238, 74, 74);
 }

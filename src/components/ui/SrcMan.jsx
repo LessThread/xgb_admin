@@ -73,8 +73,14 @@ class Src extends React.Component {
     }
 
     handleClick = (id, num) => {
+        if (id !== -1) {
+            this.setState({
+                nav_id: id,
+                pageNum: 1,
+            });
+            num = 1;
+        }
 
-        num = 1;
         fetch(`http://120.48.17.78:8080/api/Article/getByPage?nav_id=` + id + `&pageNum=` + num + `&pageSize=` + this.state.pageSize, setting)
             .then(function (response) {
                 return response.json();
@@ -95,13 +101,53 @@ class Src extends React.Component {
 
     }
 
-    show = () => {
 
-        console.log("this is show")
-        console.log(this.state.accdat)
+    edit = (index) => {
+
+
+    }
+
+
+    pagechange = (x) => {
+        console.log("past: " + this.state.pageNum)
+
+        if (x === -1) {
+            if (this.state.pageNum > 1)
+                this.setState({
+                    pageNum: --this.state.pageNum,
+                })
+        }
+
+        else {
+            this.setState({
+                pageNum: ++this.state.pageNum,
+            })
+        }
+
+        console.log(this.state.pageNum)
+
+        fetch(`http://120.48.17.78:8080/api/Article/getByPage?nav_id=` + this.state.nav_id + `&pageNum=` + this.state.pageNum + `&pageSize=` + this.state.pageSize, setting)
+            .then(function (response) {
+                return response.json();
+            })
+            .then((res) => {
+                console.log("@")
+                // console.log(res)
+                this.setState({
+                    accdat: res.data.res,
+                    isFinished: 1,
+                })
+            })
+    }
+
+    show = () => {
 
         if (this.state.isFinished) {
             return this.state.accdat.map((item, index) => {
+                let path = {
+                    pathname: `/app/edit/activity`,
+                    state: item.id,
+                }
                 return (
                     <div style={{ display: `flex`, justifyContent: `space-between`, margin: `10px`, }}>
                         <div style={{ display: `flex`, justifyContent: `space-between` }}>
@@ -119,7 +165,8 @@ class Src extends React.Component {
                         </div>
 
                         <div>
-                            <button className='operateButEdit'>编辑</button>
+                            <button className='operateButEdit' onClick={({ index }) => this.edit(index)}>编辑</button>
+                            <Link to={path}><Button type="default">编辑2</Button></Link>
                         </div>
 
 
@@ -212,7 +259,7 @@ class Src extends React.Component {
 
     mov = () => {
         this.setState({
-            ismov: `block`,
+            ismov: `none`,
         })
     }
 
@@ -223,14 +270,16 @@ class Src extends React.Component {
         })
     }
 
-
+    pageNumx = () => {
+        return this.state.pageNum
+    }
 
     render() {
 
         return (
             <div >
                 <BreadcrumbCustom first="资源管理" />
-                <div id="root">
+                <div id="root444">
 
                     <div id="left">
                         <div>
@@ -252,13 +301,17 @@ class Src extends React.Component {
                             <div>
                                 <button onClick={() => this.handleClick(85)} className="meau">通知公告</button>
                             </div>
+                            <div>
+                                <button onClick={() => this.handleClick(69)} className="meau">文章暂存</button>
+                            </div>
                         </div>
 
                         <div id="operate">
 
                             <div className='operateBox'>
-                                <button className='operateBut'>上一页</button>
-                                <button className='operateBut'>下一页</button>
+                                <button className='operateBut' style={{ display: `inline` }} onClick={() => this.pagechange(-1)}>上一页</button>
+                                <h3>{this.state.pageNum}</h3>
+                                <button className='operateBut' onClick={() => this.pagechange(1)}>下一页</button>
                             </div>
 
                             <div className='operateBox'>
@@ -269,8 +322,8 @@ class Src extends React.Component {
 
                             <div style={{ display: this.state.isdel }} className='operateBox'>
                                 <h4>确认删除</h4>
-                                <button onClick={this.del2} className='operateBut' id="del2">确&emsp; 认</button>
-                                <button onClick={this.del3} className='operateBut'>取&emsp; 消</button>
+                                <button onClick={this.del2} className='operateBut' id="del2">确认</button>
+                                <button onClick={this.del3} className='operateBut'>取消</button>
                             </div>
 
                             <div className='operateBox' style={{ display: this.state.ismov }}>
@@ -283,7 +336,8 @@ class Src extends React.Component {
                                     <option value={84}>一院一品</option>
                                     <option value={85}>通知公告</option>
                                 </select>
-                                <button onClick={this.changeSel} className="operateBut">确认移动</button>
+                                <button onClick={this.changeSel} className="operateBut red">确认移动</button>
+                                <button onClick={this.mov} className="operateBut">取消</button>
                             </div>
 
                         </div>

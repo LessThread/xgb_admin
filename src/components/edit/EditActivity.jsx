@@ -37,6 +37,13 @@ class EditorDemo extends React.Component {
         }
     }
 
+
+    componentWillMount() {
+        let iurl = window.location.href
+        let index = iurl.indexOf("=", 3)
+        iurl = iurl.slice(index + 1)
+        console.log(iurl);
+    }
     noNaviNotification() {
         message.error("栏目列表获取失败");
     }
@@ -105,25 +112,30 @@ class EditorDemo extends React.Component {
                 const { apiPath, request } = editMessage(this.props.location.state.navID, this.props.location.state.articleID);
                 console.log(this.props.location.state.navID)
                 console.log(this.props.location.state.articleID)
-                fetchApi(apiPath, request)
+                console.log(this.props.location.state)
+                let iurl = `http://120.48.17.78:8080/api/Article/getById?id=` + this.props.location.state
+                fetch(iurl, {
+                    method: "GET",
+
+                })
                     .then(res => res.json())
                     .then(data => {
                         // console.log(data);
                         this.setState({
-                            initialId: data.data.activity.id,
-                            initialColumn: data.data.activity.id,
-                            initialTitle: data.data.activity.title,
-                            initialPeople: data.data.activity.speaker,
-                            initialJournalist: data.data.activity.remark,
-                            initialLocation: data.data.activity.location,
-                            initialFile: data.data.activity.appendix,
-                            initialImage: data.data.activity.picture,
-                            initialDate: data.data.activity.start_date,
-                            initialTime: data.data.activity.start_time,
+                            initialId: data.data.id,
+                            initialColumn: data.data.id,
+                            initialTitle: data.data.title,
+                            initialPeople: data.data.speaker,
+                            initialJournalist: data.data.remark,
+                            initialLocation: data.data.location,
+                            initialFile: data.data.appendix,
+                            initialImage: data.data.picture,
+                            initialDate: data.data.start_date,
+                            initialTime: data.data.start_time,
                         })
                         setTimeout(() => {
                             this.props.form.setFieldsValue({
-                                content: BraftEditor.createEditorState(data.data.activity.details)
+                                content: BraftEditor.createEditorState(data.data.details)
                             })
                         }, 300)
                     });
