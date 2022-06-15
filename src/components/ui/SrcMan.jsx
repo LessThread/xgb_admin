@@ -165,8 +165,8 @@ class Src extends React.Component {
                         </div>
 
                         <div>
-                            <button className='operateButEdit' onClick={({ index }) => this.edit(index)}>编辑</button>
-                            <Link to={path}><Button type="default">编辑2</Button></Link>
+                            {/* <button className='operateButEdit' onClick={({ index }) => this.edit(index)}>编辑</button> */}
+                            <Link to={path} className='operateButEdit'><Button type="default">编辑2</Button></Link>
                         </div>
 
 

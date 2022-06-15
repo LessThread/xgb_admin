@@ -50,36 +50,70 @@ class EditorDemo extends React.Component {
 
     myUploadFn = (param) => {
         //富文本编辑器媒体库文件的上传
-        const serverURL = 'http://120.48.17.78:8080/api/uploadFile';
-        const xhr = new XMLHttpRequest;
-        const fd = new FormData();
-        const successFn = (res) => {
-            var json = JSON.parse(xhr.responseText)
-            param.success({
-                url: 'http://120.48.17.78:8080/api/' + json.data.path,
-                meta: {
-                    //相关配置
-                }
-            })
-        }
-        const progressFn = (event) => {
-            //上传进度
-            param.progress(event.loaded / event.total * 100)
-        }
-        const errorFn = (res) => {
-            //上传出错
-            param.error({
-                mes: '上传失败',
-            })
-        }
 
-        xhr.upload.addEventListener("progress", progressFn, false)
-        xhr.addEventListener("load", successFn, false)
-        xhr.addEventListener("error", errorFn, false)
-        xhr.addEventListener("abort", errorFn, false)
-        fd.append('file', param.file)
-        xhr.open('POST', serverURL, true)
-        xhr.send(fd)
+        // const serverURL = `http://120.48.17.78:8080/api/uploadFile`;
+
+
+        // const xhr = new XMLHttpRequest;
+        // const fd = new FormData();
+
+
+        // const successFn = (res) => {
+        //     var json = JSON.parse(xhr.responseText)
+        //     param.success({
+        //         url: json.data.path,
+        //         meta: {
+        //             //相关配置
+        //         }
+        //     })
+        // }
+
+
+        // const progressFn = (event) => {
+        //     //上传进度
+        //     param.progress(event.loaded / event.total * 100)
+        // }
+
+        // const errorFn = (res) => {
+        //     //上传出错
+        //     param.error({
+        //         mes: '上传失败',
+        //     })
+        // }
+
+        // xhr.upload.addEventListener("progress", progressFn, false)
+        // xhr.addEventListener("load", successFn, false)
+        // xhr.addEventListener("error", errorFn, false)
+        // xhr.addEventListener("abort", errorFn, false)
+
+        // fd.append('fileUpload', param.file)
+        // xhr.open('POST', serverURL, true)
+        // xhr.send(fd)
+
+        const formData = new FormData();
+        formData.append('fileUpload', param.file);
+
+        fetch(`http://120.48.17.78:8080/api/uploadFile`, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                param.success(data.data)
+            });
+
+
+
+
+
+        // if (res.status === 0) {
+        //     param.success(res)   //success需要一个有url属性的对象{url:'...'}
+        // } else {
+        //     param.error({
+        //         msg: '上传错误'
+        //     })
+        // }
     }
 
 
