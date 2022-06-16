@@ -48,47 +48,7 @@ class EditorDemo extends React.Component {
         message.error("栏目列表获取失败");
     }
 
-    myUploadFn = (param) => {
-        //富文本编辑器媒体库文件的上传
-
-        // const serverURL = `http://120.48.17.78:8080/api/uploadFile`;
-
-
-        // const xhr = new XMLHttpRequest;
-        // const fd = new FormData();
-
-
-        // const successFn = (res) => {
-        //     var json = JSON.parse(xhr.responseText)
-        //     param.success({
-        //         url: json.data.path,
-        //         meta: {
-        //             //相关配置
-        //         }
-        //     })
-        // }
-
-
-        // const progressFn = (event) => {
-        //     //上传进度
-        //     param.progress(event.loaded / event.total * 100)
-        // }
-
-        // const errorFn = (res) => {
-        //     //上传出错
-        //     param.error({
-        //         mes: '上传失败',
-        //     })
-        // }
-
-        // xhr.upload.addEventListener("progress", progressFn, false)
-        // xhr.addEventListener("load", successFn, false)
-        // xhr.addEventListener("error", errorFn, false)
-        // xhr.addEventListener("abort", errorFn, false)
-
-        // fd.append('fileUpload', param.file)
-        // xhr.open('POST', serverURL, true)
-        // xhr.send(fd)
+    myUploadFn = async (param) => {
 
         const formData = new FormData();
         formData.append('fileUpload', param.file);
@@ -100,20 +60,13 @@ class EditorDemo extends React.Component {
             .then(response => response.json())
             .then(data => {
                 console.log(data)
-                param.success(data.data)
+                let ingurl = `http://120.48.17.78:8080/uploads/images/` + data.data;
+                console.log(ingurl)
+                param.success({
+                    url: ingurl,
+                    meta: {},
+                })
             });
-
-
-
-
-
-        // if (res.status === 0) {
-        //     param.success(res)   //success需要一个有url属性的对象{url:'...'}
-        // } else {
-        //     param.error({
-        //         msg: '上传错误'
-        //     })
-        // }
     }
 
 
@@ -569,6 +522,7 @@ class EditorDemo extends React.Component {
                                         <BraftEditor
                                             media={{ uploadFn: this.myUploadFn }}
                                             value={this.state.editorState}
+                                            //这个地方做过修改
                                             className="my-editor"
                                             controls={editorControls}
                                             onChange={this.handleEditorChange}
