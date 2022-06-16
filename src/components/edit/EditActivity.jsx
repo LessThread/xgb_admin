@@ -256,11 +256,16 @@ class EditorDemo extends React.Component {
         window.previewWindow.document.close()
     }
 
+
+
+
+
     handleSubmit = e => {
+        console.log("call handleSubmit");
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                // console.log(values.time._i);
+                console.log(values);
                 let date = `${values.date._d.getFullYear()}-${values.date._d.getMonth() + 1}-${values.date._d.getDate()}`;
                 // console.log(`${values.date._d.getFullYear()}-${values.date._d.getMonth() + 1}-${values.date._d.getDate()}`)
                 this.setState({ isPosting: true })
@@ -338,6 +343,9 @@ class EditorDemo extends React.Component {
             }
         });
     }
+
+
+
 
 
 

@@ -121,7 +121,7 @@ export default class CropperModal extends Component {
             <div className="submit-button" onClick={this.handleSubmit}>
               提交
               <img src={this.state.can} />
-              <div style={{ backgroundColor: `red`, }}>Debug</div>
+              {/* <div style={{ backgroundColor: `red`, }}>Debug</div> */}
 
             </div>
 
