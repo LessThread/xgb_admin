@@ -256,6 +256,7 @@ class EditorDemo extends React.Component {
         window.previewWindow.document.close()
     }
 
+        ;
 
 
 
